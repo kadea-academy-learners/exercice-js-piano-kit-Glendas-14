@@ -1,57 +1,46 @@
-
-
-let pianoPlay;
-
-document.addEventListener('keypress', function(event){
-if(event.key == 'd'){
-    pianoPlay = document.querySelector('audio[data-key="68"]')
-    pianoPlay.play();
-    
-}
-if(event.key == 'r'){
-    pianoPlay = document.querySelector('audio[data-key="82"]')
-    pianoPlay.play();
-}
-if(event.key == 'f'){
-    pianoPlay = document.querySelector('audio[data-key="70"]')
-    pianoPlay.play();
-}
-if(event.key == 't'){
-    pianoPlay = document.querySelector('audio[data-key="84"]')
-    pianoPlay.play();
-}
-if(event.key == 'g'){
-    pianoPlay = document.querySelector('audio[data-key="71"]')
-    pianoPlay.play();   
-}
-if(event.key == 'h'){
-    pianoPlay = document.querySelector('audio[data-key="72"]')
-    pianoPlay.play();   
-}
-if(event.key == 'u'){
-    pianoPlay = document.querySelector('audio[data-key="85"]')
-    pianoPlay.play();   
-}
-if(event.key == 'i'){
-    pianoPlay = document.querySelector('audio[data-key="73"]')
-    pianoPlay.play();   
-}
-if(event.key == 'j'){
-    pianoPlay = document.querySelector('audio[data-key="74"]')
-    pianoPlay.play();   
-}
-if(event.key == 'k'){
-    pianoPlay = document.querySelector('audio[data-key="75"]')
-    pianoPlay.play();   
-}
-if(event.key == 'o'){
-    pianoPlay = document.querySelector('audio[data-key="79"]')
-    pianoPlay.play();   
-}
-if(event.key == 'l'){
-    pianoPlay = document.querySelector('audio[data-key="76"]')
-    pianoPlay.play();   
-}
+function soundPlayer(keyCode) {
+  if (!keyCode) return;
+  const selector = `[data-key="${keyCode}"]`;
+  let sound = document.querySelector(`audio${selector}`);
+  addPlayClass(`div${selector}`);
+  sound.play();
 }
 
-)
+function addPlayClass(selector) {
+  let key = document.querySelector(selector);
+  if (!key.classList.contains("play")) {
+    key.classList.add("play");
+  }
+}
+
+function removePlayClass(selector) {
+  let key = document.querySelector(selector);
+  if (key.classList.contains("play")) {
+    key.classList.remove("play");
+  }
+}
+
+const soundKey = {
+  d: 68,
+  r: 82,
+  f: 70,
+  t: 84,
+  g: 71,
+  h: 72,
+  u: 85,
+  j: 74,
+  i: 79,
+  k: 75,
+  o: 73,
+  l: 76,
+};
+
+document.addEventListener("keydown", function (event) {
+  event.repeat = false;
+  soundPlayer(soundKey[event.key]);
+});
+
+document.addEventListener("keyup", function (event) {
+  const selector = `div[data-key="${soundKey[event.key]}"]`;
+  removePlayClass(selector);
+});
